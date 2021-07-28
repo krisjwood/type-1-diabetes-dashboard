@@ -1,0 +1,20 @@
+/* body {
+    margin: 0;
+    font-family: sans-serif;
+} */
+
+.center {
+    margin: auto;
+    width: auto;
+    text-align: center;
+  }
+
+.form-control {
+      /* center form controls */
+      display: inline-block;
+  
+      /* override Bootstrap's 100% width for form controls */
+      width: auto;
+  }
+
+

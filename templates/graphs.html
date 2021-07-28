@@ -1,0 +1,130 @@
+{% extends 'boiler.html' %}
+
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+<div class="d-flex align-items-center">
+<div class="p-2"><h1>Graphs ({{ timeframe_stat[1] }})</h1></div>
+<!-- Change timeframe button -->
+<div class="p-2"><a class="btn btn-primary mx-auto" href="/timeframe" role="button">Change timeframe</a></div>
+</div>
+<br>
+
+<div>
+  <table class="table table-striped table-hover table-bordered">
+      <thead>
+        <tr class="bg-primary" style="text-align:center">
+          <th colspan="3">Data info</th>
+          <th colspan="6">Stats</th>
+          <th colspan="2">Quartiles</th>
+          <th colspan="5">Range</th>
+        </tr>
+        <tr>
+          <th scope="col">Timeframe</th>
+          <th scope="col"># Readings</th>
+          <th scope="col">Coverage</th>    
+          <th scope="col">Min</th>
+          <th scope="col">Max</th>
+          <th scope="col">Mean</th> 
+          <th scope="col">Median</th>
+          <th scope="col">Mode</th>
+          <th scope="col">Std Dev</th>
+          <th scope="col">Higher</th>
+          <th scope="col">Lower</th>  
+          <th scope="col">>15</th>   
+          <th scope="col">>8</th>   
+          <th scope="col">4-7.9</th>   
+          <th scope="col">4></th>
+          <th scope="col">3></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>{{ timeframe_stat[1] }}</td>
+              <td>{{ timeframe_stat[2]['Stats']['Total'] }}</td>
+              <td>{{ timeframe_stat[2]['Stats']['Coverage'] }}%</td>
+              <td>{{ timeframe_stat[2]['Stats']['Min'] }}</td>
+              <td>{{ timeframe_stat[2]['Stats']['Max'] }}</td>
+              <td>{{ timeframe_stat[2]['Stats']['Mean'] }}</td>
+              <td>{{ timeframe_stat[2]['Stats']['Median'] }}</td>
+              <td>{{ timeframe_stat[2]['Stats']['Mode'] }}</td>
+              <td>{{ timeframe_stat[2]['Stats']['Std Dev'] }}</td>
+              <td>{{ timeframe_stat[2]['Stats']['75th percentile'] }}</td>
+              <td>{{ timeframe_stat[2]['Stats']['25th percentile'] }}</td>
+              <td>{{ timeframe_stat[2]['Stats']['Very High'] }}%</td>
+              <td>{{ timeframe_stat[2]['Stats']['High'] }}%</td>
+              <td>{{ timeframe_stat[2]['Stats']['In range'] }}%</td>
+              <td>{{ timeframe_stat[2]['Stats']['Low'] }}%</td>
+              <td>{{ timeframe_stat[2]['Stats']['Very low'] }}%</td>
+          </tr>
+      </tbody>
+    </table><br>
+  
+</div>
+
+<!-- 1st row of graphs -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm">
+      <div>
+        <div id="chart">
+          <embed type="image/svg+xml" src = {{ range_stackedbar_chart|safe }} />
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div>
+        <div id="chart">
+          <embed type="image/svg+xml" src = {{ range_stackedbar_chart|safe }} />
+        </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2nd row of graphs -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm">
+      <div>
+        <div id="chart">
+          <embed type="image/svg+xml" src = {{ range_stackedbar_chart|safe }} />
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div>
+        <div id="chart">
+          <embed type="image/svg+xml" src = {{ range_stackedbar_chart|safe }} />
+        </div>
+    </div>
+  </div>
+</div>
+
+<!-- Daily averages for timescale -->
+<div class="container">
+  <table class="table table-striped table-hover table-bordered">
+      <thead>
+        <tr class="bg-primary" style="text-align:center">
+          <th colspan="2">Daily averages</th>
+        </tr>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">mmol/L</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for day in day_avgs %}    
+          <tr>
+            <td>{{ day[0] }} ({{ day[2] }})</td>
+            <td>{{ day[1] }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table><br>
+  
+</div>
+{% endblock %}

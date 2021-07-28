@@ -1,0 +1,172 @@
+{% extends 'boiler.html' %}
+
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+<div class="d-flex justify-content-between">
+<h1>Statistics</h1>
+<p><b>Latest record:</b> Date: {{ latestdate }} Time: {{ latesttime }} <br> <b>Total records:</b> {{ readings_str }} ({{ total_data_days }} days of data)</p>
+</div>
+<div>
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+          <tr class="bg-primary" style="text-align:center">
+            <th colspan="3">Data info</th>
+            <th colspan="6">Stats</th>
+            <th colspan="2">Quartiles</th>
+            <th colspan="5">Range</th>
+          </tr>
+          <tr>
+            <th scope="col">Timeframe</th>
+            <th scope="col"># Readings</th>
+            <th scope="col">Coverage</th>    
+            <th scope="col">Min</th>
+            <th scope="col">Max</th>
+            <th scope="col">Mean</th> 
+            <th scope="col">Median</th>
+            <th scope="col">Mode</th>
+            <th scope="col">Std Dev</th>
+            <th scope="col">Higher</th>
+            <th scope="col">Lower</th>  
+            <th scope="col">>15</th>   
+            <th scope="col">>8</th>   
+            <th scope="col">4-7.9</th>   
+            <th scope="col">4></th>
+            <th scope="col">3></th>
+            <!-- <th scope="col">Est. HbA1c</th> -->
+          </tr>
+        </thead>
+        <tbody>
+            {% for stat in stats_list %}
+            <tr>
+                <td>{{ stat[1] }}</td>
+                <td>{{ stat[2]['Stats']['Total'] }}</td>
+                <td>{{ stat[2]['Stats']['Coverage'] }}%</td>
+                <td>{{ stat[2]['Stats']['Min'] }}</td>
+                <td>{{ stat[2]['Stats']['Max'] }}</td>
+                <td>{{ stat[2]['Stats']['Mean'] }}</td>
+                <td>{{ stat[2]['Stats']['Median'] }}</td>
+                <td>{{ stat[2]['Stats']['Mode'] }}</td>
+                <td>{{ stat[2]['Stats']['Std Dev'] }}</td>
+                <td>{{ stat[2]['Stats']['75th percentile'] }}</td>
+                <td>{{ stat[2]['Stats']['25th percentile'] }}</td>
+                <td>{{ stat[2]['Stats']['Very High'] }}%</td>
+                <td>{{ stat[2]['Stats']['High'] }}%</td>
+                <td>{{ stat[2]['Stats']['In range'] }}%</td>
+                <td>{{ stat[2]['Stats']['Low'] }}%</td>
+                <td>{{ stat[2]['Stats']['Very low'] }}%</td>
+
+            </tr>
+            {% endfor %}
+    
+        </tbody>
+      </table><br>
+    
+</div>
+
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm">
+      <div>
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+              <tr class="bg-primary" style="text-align:center">
+                <th colspan="2">Time of Day (All time)</th>
+              </tr>
+              <tr>
+                <th scope="col">Time of day</th>
+                <th scope="col">Average</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for time in timeofday_avg %}
+                <tr>
+                    <td>{{ time[1] }}</td>
+                    <td>{{ time[0] }} mmol/L</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td class="table-secondary" colspan="2">Your best time of the day is the <b>{{ best_time[1] }}</b> and your worst time of the day is the <b>{{ worst_time[1] }}</b></td>
+                </tr>
+            </tbody>
+          </table><br>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div>
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+              <tr class="bg-primary" style="text-align:center">
+                <th colspan="2">Weekday (All time)</th>
+              </tr>
+              <tr>
+                <th scope="col">Weekday</th>
+                <th scope="col">Average</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for day in weekday_avg %}
+                <tr>
+                    <td>{{ day[1] }}</td>
+                    <td>{{ day[0] }} mmol/L</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td class="table-secondary" colspan="2">Your best day of the week is <b>{{ best_weekday[1] }}</b> and your worst day of the week is <b>{{ worst_weekday[1] }}</b></td>
+                </tr>
+            </tbody>
+          </table><br>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm">
+      <div>
+        <div id="chart">
+          <embed type="image/svg+xml" src = {{ past_1h|safe }} />
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div>
+        <div id="chart">
+          <embed type="image/svg+xml" src = {{ past_24h|safe }} />
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm">
+      <div>
+        <div id="chart">
+          <embed type="image/svg+xml" src = {{ range_stackedbar_chart|safe }} />
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div>
+        <div id="chart">
+          <embed type="image/svg+xml" src = {{ past_seven_days|safe }} />
+        </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
+

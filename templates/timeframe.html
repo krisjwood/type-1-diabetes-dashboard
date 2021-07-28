@@ -1,0 +1,22 @@
+{% extends 'boiler.html' %}
+
+
+{% block head %}
+{% endblock %}
+
+  {% block body %}
+  <h1>Choose timescale</h1>
+  <form action="/timeframe" method="post">
+    <div class="form-group w-25"> 
+      <select id="time_select" class="form-control" name="graph_timeframe" width="10">
+        <option value="" disabled selected>Timeframe (Coverage %)</option>
+        {% for x in timeframe_list[2:] %}
+          <option width="10" value="{{ x[1] }}">{{ x[0] }} ({{ x[2] }}%)</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <button class="btn btn-primary" type="submit">Go</button>
+    </div>  
+  </form>
+  {% endblock %}

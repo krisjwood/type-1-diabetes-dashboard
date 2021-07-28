@@ -1,0 +1,20 @@
+{% extends 'boiler.html' %}
+
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+<h1>Edit diary entry</h1>
+<h6><b>ID:</b> {{ edit_entry[0] }}</h6>
+<h6><b>Date:</b> {{ edit_entry[1] }}</h6>
+<br>
+<form action="/save_edit" method="post">
+    <div class="form-group">
+        <label for="info"><b>Amend details</b></label><br>
+        <input type="hidden" name="id" value="{{ edit_entry[0] }}"></input>
+        <textarea class="form-control" name="info" rows="5" id="info"cols="100" value="{{ edit_entry[2] }}">{{ edit_entry[2] }}</textarea>
+    </div>    
+    <button class="btn btn-primary" type="submit">Update</button>
+</form>
+{% endblock %}

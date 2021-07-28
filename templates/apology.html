@@ -1,0 +1,14 @@
+{% extends "boiler.html" %}
+
+{% block title %}
+    Apology
+{% endblock %}
+
+{% block body %}
+    <img alt="{{ top }}" class="rounded mx-auto d-block" src="https://api.memegen.link/images/custom/{{ top | urlencode }}/{{ bottom | urlencode }}.jpg?background=https://images.news18.com/ibnlive/uploads/2020/10/1602213968_sports-2020-10-09t085537.964.png" title="{{ top }}">
+    <br>
+    <div class="d-flex justify-content-center">
+    <a class="btn btn-primary" href="/login" role="button">Back to login</a>
+    </div>
+    {% endblock %}
+
